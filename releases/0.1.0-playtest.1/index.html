@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#172521">
+<title>再喝一口 · 试玩</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="game-app">
+  <header class="topbar">
+    <div><span id="chapter-name" class="eyebrow">乌鸦喝水 · 白天</span><h1>再喝一口<span>！</span></h1></div>
+    <div class="tools"><button id="sound-btn" class="quiet" aria-pressed="true">音乐 开</button><button id="pause-btn" class="quiet" aria-label="暂停游戏">暂停</button></div>
+  </header>
+  <section class="journey-bar" aria-label="关卡与目标">
+    <button id="map-btn" class="route-button" aria-label="选择关卡"><span id="stage-name">第1关 · 宽口瓶</span><span id="stage-count">关卡 <b>›</b></span></button>
+    <div id="route-dots" class="route-dots" aria-hidden="true"></div>
+    <div class="goal-line"><span>已投中 <strong id="hit-count">0</strong> / 3</span><span>剩余石子 <strong id="ammo-count">5</strong></span></div>
+  </section>
+  <section class="scene-shell" aria-label="游戏画面">
+    <canvas id="scene-canvas" width="800" height="1040" tabindex="0" aria-label="任选地上一颗石子，按住向上拖动瞄准，从它的原位抛出；长短决定力度。键盘按住空格选取下一颗，用方向键调整，松开空格发射" aria-describedby="action-hint"></canvas>
+    <div id="asset-loading" class="loading"><span>加载中…</span><button id="reload-btn" hidden>重新加载</button></div>
+    <div id="result-panel" class="overlay result-overlay" hidden>
+      <article class="result-card">
+        <p id="result-kicker" class="eyebrow">第1关</p><h2 id="result-title" tabindex="-1">通关</h2>
+        <p id="result-detail"></p><dl id="score-breakdown" class="score-breakdown" aria-label="得分明细" hidden></dl><p id="result-next" class="next-place" hidden></p><p id="result-discovery" class="discovery" hidden></p>
+        <div class="result-actions"><button id="next-btn" class="primary">下一关</button><button id="retry-btn" class="secondary">重试</button><button id="rescue-btn" class="secondary" hidden>补充2颗石子</button><button id="result-map-btn" class="text-button">选择关卡</button></div>
+        <p id="rescue-note" class="small-note" hidden>试玩版可免费补充一次，不播放广告。</p>
+      </article>
+    </div>
+    <div id="pause-panel" class="overlay middle-overlay" role="dialog" aria-modal="true" aria-labelledby="pause-title" hidden><article class="dialog-card"><h2 id="pause-title">已暂停</h2><p>点击继续，接着玩。</p><div class="audio-settings"><button id="music-setting-btn" class="quiet" aria-pressed="true">音乐 开</button><button id="effects-btn" class="quiet" aria-pressed="true">音效 开</button></div><p id="audio-note" class="small-note">音乐和音效可以分别开关。</p>
+      <p class="playtest-version">试玩版 <span id="playtest-version">0.1.0-playtest.1</span></p>
+      <details id="feedback-panel" class="feedback-panel"><summary>试玩反馈</summary>
+        <label for="feedback-comment">你的意见（可不填）</label>
+        <textarea id="feedback-comment" rows="3" maxlength="2000" placeholder="哪里不好用，或者你想改什么？" autocomplete="off"></textarea>
+        <p class="feedback-note">复制后发给邀请你试玩的人，不会自动发送。</p>
+        <button id="feedback-generate" class="secondary" type="button">生成反馈</button>
+        <div id="feedback-preview" hidden><label for="feedback-output">确认下面的内容</label><textarea id="feedback-output" rows="8" readonly spellcheck="false"></textarea><button id="feedback-copy" class="secondary" type="button">复制反馈</button></div>
+        <p id="feedback-status" role="status" aria-live="polite"></p>
+      </details>
+      <button id="resume-btn" class="primary">继续游戏</button></article></div>
+    <div id="map-panel" class="overlay map-overlay" role="dialog" aria-modal="true" aria-labelledby="map-title" hidden>
+      <article class="map-card"><div class="map-heading"><div><h2 id="map-title">选择关卡</h2><p id="map-progress" class="map-progress">已通关 0 / 9</p></div><button id="close-map-btn" class="quiet" aria-label="关闭关卡选择">关闭</button></div>
+      <div id="level-grid" class="level-grid"></div>
+      <button id="endless-btn" class="primary" disabled>连续挑战 · 通关9关后解锁</button><p id="record-line" class="record-line"></p>
+      <details class="map-details" id="score-info"><summary>得分规则与奖励记录</summary><div class="details-body"><p>每投中一颗得100分，越接近瓶口中心，额外得分越高，最多50分。</p><p>通关时，未使用补充石子：每剩一颗加20分，3次全部投中再加150分。</p><p>同一关内，灰色、金褐色、深色石子各投中至少一次，加50分。</p><p>总分只累加各关的最高分。</p><div id="achievement-list" class="achievement-list"></div></div></details>
+      <details class="map-details" id="egg-info"><summary>彩蛋 <span id="egg-count">0 / 3</span></summary><div id="egg-list" class="details-body"></div></details>
+      </article>
+    </div>
+  </section>
+  <footer class="game-footer"><p id="action-hint">按住石子，向上拖动，松手投出</p><p id="condition-hint" class="condition-hint">向上拖得越远，投得越高。</p><div class="footer-meta"><span id="save-status">进度已保存</span><button id="help-btn" class="text-button" aria-pressed="false">更多提示</button></div></footer>
+  <p id="live-status" class="sr-only" aria-live="polite"></p>
+</main>
+<script src="assets.js"></script>
+<script src="core.js"></script>
+<script src="render.js"></script>
+<script src="audio.js"></script>
+<script src="game.js"></script>
+<script src="feedback.js"></script>
+</body>
+</html>
