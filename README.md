@@ -1,6 +1,6 @@
 # 再喝一口 · 试玩
 
-[开始试玩](https://wangherb1.github.io/crow-water-playtest/) · 版本 0.3.0-playtest.3
+[开始试玩](https://wangherb1.github.io/crow-water-playtest/) · 版本 0.4.0-playtest.4
 
 按住地上的石子，向上拖动瞄准，松手投进瓶里。
 
