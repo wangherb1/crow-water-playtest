@@ -1,0 +1,1 @@
+window.ART_SOURCES = {background:'assets/courtyard-clean-v1.png',sprites:'assets/sprites.png',doneBackground:'assets/background-done.png',crowRig:'assets/crow-rig-v1.png',rooftop:'assets/rooftop-v1.png',stream:'assets/stream-v1.png'};
