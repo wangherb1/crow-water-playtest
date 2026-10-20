@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#172521">
+<title>再喝一口 · 试玩</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="game-app">
+  <header class="topbar">
+    <div><h1>再喝一口<span>！</span></h1><span id="chapter-name" class="eyebrow">乌鸦喝水 · 庭院</span></div>
+    <div class="tools"><button id="sound-btn" class="quiet" aria-pressed="true">音乐 开</button><button id="pause-btn" class="quiet" aria-label="暂停游戏">暂停</button></div>
+  </header>
+  <section class="journey-bar" aria-label="关卡与目标">
+    <button id="map-btn" class="route-button" aria-label="玩法与单独练习"><span id="stage-name">这一趟 · 第1 / 3瓶</span><span id="stage-count">玩法与练习 ›</span></button>
+    <div id="route-dots" class="route-dots" aria-hidden="true"></div>
+    <div class="goal-line"><span>水量 <strong id="hit-count">0</strong> / <span id="goal-count">3</span> 格</span><span>剩余石子 <strong id="ammo-count">7</strong></span></div>
+  </section>
+  <section class="scene-shell" aria-label="游戏画面">
+    <canvas id="scene-canvas" width="800" height="1040" tabindex="0" aria-label="任选石子，从原位向上拖动，松手投出。小中大石涨1、2、3格水。键盘数字1至9选石，按住空格瞄准，方向键调整，Shift加方向键精调，松空格投出。" aria-describedby="action-hint reserve-status"></canvas>
+    <div id="transfer-note" class="transfer-note" role="status" hidden></div>
+    <div id="asset-loading" class="loading"><span>加载中…</span><button id="reload-btn" hidden>重新加载</button></div>
+    <div id="result-panel" class="overlay result-overlay" hidden>
+      <article class="result-card">
+        <p id="result-kicker" class="eyebrow">第1关</p><h2 id="result-title" tabindex="-1">通关</h2>
+        <p id="result-detail"></p><dl id="score-breakdown" class="score-breakdown" aria-label="得分明细" hidden></dl><div id="next-preview" class="next-preview" hidden><canvas id="next-scene-preview" width="120" height="156" role="img" aria-label="下一关场景"></canvas><div><span id="next-place-label" class="eyebrow"></span><p id="result-next" class="next-place"></p><small id="next-change"></small></div></div><p id="result-discovery" class="discovery" hidden></p>
+        <div class="result-actions"><button id="next-btn" class="primary">再来一趟</button><button id="retry-btn" class="secondary">从头再来</button><button id="rescue-btn" class="secondary" hidden>补2颗石子，继续</button><button id="result-map-btn" class="text-button">单独练习一个场景</button></div>
+        <p id="rescue-note" class="small-note" hidden>这一趟可免费补充一次，不播放广告。</p>
+      </article>
+    </div>
+    <div id="pause-panel" class="overlay middle-overlay" role="dialog" aria-modal="true" aria-labelledby="pause-title" hidden><article class="dialog-card"><h2 id="pause-title">已暂停</h2><p>点击继续，接着玩。</p><div class="audio-settings"><button id="music-setting-btn" class="quiet" aria-pressed="true">音乐 开</button><button id="effects-btn" class="quiet" aria-pressed="true">音效 开</button></div><p id="audio-note" class="small-note">音乐和音效可以分别开关。</p>
+      <p class="playtest-version">试玩版 <span id="playtest-version">0.7.0-playtest.7</span></p>
+      <details id="feedback-panel" class="feedback-panel"><summary>试玩反馈</summary>
+        <label for="feedback-comment">你的意见（可不填）</label>
+        <textarea id="feedback-comment" rows="3" maxlength="2000" placeholder="哪里不好用，或者你想改什么？" autocomplete="off"></textarea>
+        <p class="feedback-note">复制后发给邀请你试玩的人，不会自动发送。</p>
+        <button id="feedback-generate" class="secondary" type="button">生成反馈</button>
+        <div id="feedback-preview" hidden><label for="feedback-output">确认下面的内容</label><textarea id="feedback-output" rows="8" readonly spellcheck="false"></textarea><button id="feedback-copy" class="secondary" type="button">复制反馈</button></div>
+        <p id="feedback-status" role="status" aria-live="polite"></p>
+      </details>
+      <button id="resume-btn" class="primary">继续游戏</button></article></div>
+    <div id="map-panel" class="overlay map-overlay" role="dialog" aria-modal="true" aria-labelledby="map-title" hidden>
+      <article class="map-card"><div class="map-heading"><div><h2 id="map-title">带哪颗，怎么投</h2><p id="map-progress" class="map-progress">三瓶共用七颗石子，换地点不补满。</p></div><button id="close-map-btn" class="quiet" aria-label="关闭练习选择">关闭</button></div>
+      <p class="map-intro">小石子容易进，大石子涨水多。超过目标的水会浪费，留好后面要用的石子。</p>
+      <button id="endless-btn" class="primary">开始新的一趟</button><p id="record-line" class="record-line"></p>
+      <h3 class="practice-heading">也可以只练一瓶</h3><div id="place-album" class="place-album" hidden></div><div id="level-grid" class="level-grid"></div>
+      <details class="map-details" id="score-info"><summary>成绩与记录</summary><div class="details-body"><p>命中越准得分越高。整趟按命中、准度、剩余石子和完成表现计分，只保存最高分，不重复累加。</p><p>练习只记录当前场景的成绩。</p><div id="achievement-list" class="achievement-list"></div></div></details>
+      <details class="map-details" id="egg-info" hidden><summary>记录 <span id="egg-count"></span></summary><div id="egg-list" class="details-body"></div></details>
+      <details class="map-details"><summary>操作与提示</summary><div class="details-body"><p>按住一颗石子，向上拖动，松手投出。大石涨3格，中石涨2格，小石涨1格。</p><p>前两瓶显示完整教学预测。屋檐显示完整基础路线和参考落点，实际飞行受风和瓶盖影响。</p><p>键盘数字1至7选石；补充的石子用8、9选择。按住空格，用方向键瞄准，Shift加方向键细调，松开空格投出。</p><p>开始新的一趟或单独练习，会结束当前这次尝试。</p></div></details>
+      <p id="legacy-note" class="legacy-note">旧版和旧成绩仍保留：<a href="https://wangherb1.github.io/crow-water-playtest/releases/0.6.0-playtest.6/" target="_blank" rel="noopener">0.6 · 12关</a> · <a href="https://wangherb1.github.io/crow-water-playtest/releases/0.5.0-playtest.5/" target="_blank" rel="noopener">0.5 · 9关</a></p>
+      </article>
+    </div>
+  </section>
+  <footer class="game-footer"><p id="action-hint">选一颗石子，向上拖动，松手投出</p><p id="condition-hint" class="condition-hint">七颗石子用完这一趟。</p><p id="reserve-status" class="reserve-status"></p><div class="footer-meta"><span id="save-status">成绩保存在本机</span><button id="help-btn" class="text-button" aria-pressed="false">更多提示</button></div></footer>
+  <p id="live-status" class="sr-only" aria-live="polite"></p>
+</main>
+<script src="assets.js"></script>
+<script src="core.js"></script>
+<script src="reaction.js"></script>
+<script src="actor.js"></script>
+<script src="render.js"></script>
+<script src="audio.js"></script>
+<script src="game.js"></script>
+<script src="feedback.js"></script>
+</body>
+</html>

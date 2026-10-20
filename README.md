@@ -1,8 +1,12 @@
 # 再喝一口 · 试玩
 
-[开始试玩](https://wangherb1.github.io/crow-water-playtest/) · 版本 0.6.0-playtest.6
+[开始试玩](https://wangherb1.github.io/crow-water-playtest/) · 版本 0.7.0-playtest.7
+
+一趟三瓶，共用七颗石子。小、中、大石分别涨1、2、3格水，换地点不会补满；也可以直接单独练习三个场景。
 
 按住地上的石子，向上拖动瞄准，松手投进瓶里。
+
+[0.6旧版与旧成绩](https://wangherb1.github.io/crow-water-playtest/releases/0.6.0-playtest.6/) · [0.5旧版](https://wangherb1.github.io/crow-water-playtest/releases/0.5.0-playtest.5/)
 
 这是收集玩法意见的公开演示，无广告、付费或商品兑换。进度只存在当前浏览器；换设备、清理数据或从本地文件换到网页，不会自动带过来。
 
