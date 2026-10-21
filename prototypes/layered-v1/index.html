@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#172924"><meta name="robots" content="noindex,nofollow"><title>再喝一口 · 层层打开</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="app">
+ <header><div><p class="eyebrow">四瓶一盘 · 玩法小样</p><h1>再喝一口<span>！</span></h1></div><div class="toolbar"><button id="sound" class="quiet" aria-pressed="true" aria-label="关闭声音">声音 开</button><button id="pause" class="quiet">暂停</button></div></header>
+ <section class="statusbar" aria-label="整盘进度"><div><strong id="board-name">层层打开</strong><span id="progress">喝到 0 / 4 瓶</span></div><div class="progress-track" aria-hidden="true"><i id="progress-fill"></i></div><p id="reserve">石子正在准备…</p></section>
+ <section class="scene"><canvas id="canvas" width="800" height="1240" tabindex="0" aria-label="按住可取的石子，向上拖动瞄准，松手投出。左右瓶都可投。键盘左右选择石子，空格开始瞄准，方向键调整，空格投出。" aria-describedby="action-hint"></canvas><div id="loading" class="loading">正在铺开石台…</div>
+ <div id="result" class="overlay" hidden><article class="card"><p id="result-kicker" class="eyebrow"></p><h2 id="result-title" tabindex="-1"></h2><p id="result-detail"></p><p id="result-explain" class="note"></p><button id="result-undo" class="primary">撤回这一步</button><button id="retry" class="secondary">原样再试</button><button id="result-boards" class="text">换一盘同样大小的布局</button></article></div>
+ </section>
+ <footer><p id="action-hint">按住一颗露出的石子，向上拖动，松手投出</p><p id="change-note" class="note" role="status">投走上层会露出下层；喝完一瓶，下一瓶入场。</p><div class="actions"><button id="undo" class="secondary" disabled>撤回一次</button><button id="inspect" class="secondary">看全盘</button><button id="boards" class="secondary">换一盘</button></div><p class="fine"><span id="save-status">进度只保存在本机</span> · <a href="https://wangherb1.github.io/crow-water-playtest/releases/0.7.0-playtest.7/" target="_blank" rel="noopener">0.7旧版</a></p></footer>
+ <dialog id="panel" aria-labelledby="panel-title"><div class="panel-head"><h2 id="panel-title"></h2><button id="close-panel" class="quiet" aria-label="关闭面板">关闭</button></div><div id="panel-content"></div></dialog>
+ <p id="live" class="sr-only" aria-live="polite"></p>
+</main>
+<script src="assets.js"></script><script src="boards.js"></script><script src="core.js"></script><script src="physics.js"></script><script src="actor.js"></script><script src="audio.js"></script><script src="render.js"></script><script src="game.js"></script>
+</body></html>
